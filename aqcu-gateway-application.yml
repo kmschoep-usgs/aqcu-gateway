@@ -1,0 +1,11 @@
+keystoreLocation: /path/to/.keystore
+keystorePassword: changeit
+keystoreSSLKey: tomcat
+
+myServerList: http://localhost:8443
+
+ribbonMaxAutoRetries: 3
+ribbonConnectTimeout: 1000
+ribbonReadTimeout: 10000
+
+hystrixThreadTimeout: 10000000
