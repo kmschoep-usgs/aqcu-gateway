@@ -332,3 +332,7 @@ management:
 spring:
   profiles:
     active: default, swagger
+  application:
+    name: aqcu-gateway
+  jmx:
+    default-domain: aqcu-gateway
