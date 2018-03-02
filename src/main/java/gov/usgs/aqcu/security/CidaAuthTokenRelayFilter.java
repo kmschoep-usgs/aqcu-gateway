@@ -2,10 +2,12 @@ package gov.usgs.aqcu.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 
+@Component
 public class CidaAuthTokenRelayFilter extends ZuulFilter {
 
 	@Override
