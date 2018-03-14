@@ -3,7 +3,7 @@
     <groupId>gov.usgs.aqcu</groupId>
     <artifactId>aqcu-gateway</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <cida.maven.url>https://internal.cida.usgs.gov/maven/content/repositories</cida.maven.url>
