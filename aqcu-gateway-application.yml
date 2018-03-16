@@ -2,7 +2,9 @@ keystoreLocation: /path/to/.keystore
 keystorePassword: changeit
 keystoreSSLKey: tomcat
 
-myServerList: http://localhost:8443
+legacyServerList: http://localhost:8443
+dvhydroReportServerList: http://localhost:8444
+tssReportServerList: http://localhost:8444
 
 ribbonMaxAutoRetries: 3
 ribbonConnectTimeout: 1000

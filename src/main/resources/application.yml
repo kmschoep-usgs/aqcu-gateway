@@ -1,5 +1,5 @@
 server:
-  port: 8443
+  port: ${serverPort:443}
   use-forward-headers: true
   ssl:
     key-store: ${keystoreLocation}
@@ -138,128 +138,128 @@ zuul:
 
 computationsLookup:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyLookupIsSecure:true}
 
 controlConditionsLookup:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyLookupIsSecure:true}
 
 derivationChainFindLookup:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyLookupIsSecure:true}
 
 derivationChainRatingModelLookup:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyLookupIsSecure:true}
 
 fieldVisitDatesLookup:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyLookupIsSecure:true}
 
 periodsLookup:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyLookupIsSecure:true}
 
 reportTypesLookup:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyLookupIsSecure:true}
 
 sitefileLookup:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyLookupIsSecure:true}
 
 sitesLookup:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyLookupIsSecure:true}
 
 timeseriesProcessorTypesLookup:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyLookupIsSecure:true}
 
 timeseriesIdentifiersLookup:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyLookupIsSecure:true}
 
 unitsLookup:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyLookupIsSecure:true}
 
 correctionsataglanceReport:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 derivationchainReport:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 dvhydrographReport:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${dvhydroReportServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 exampleReport:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 extremesReport:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 fiveyeargwsumReport:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 flattenXformExampleReport:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 ratingReport:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 sensorreadingsummaryReport:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 sitevisitpeakReport:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 #Legacy
 timeseriessummaryReport:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${tssReportServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
@@ -272,37 +272,37 @@ aqcu-tss-report/timeseriessummary:
 
 uvhydrographReport:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 10000000
 
 vdiagramReport:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 xformExampleReport:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 legacyHealthService:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 legacyEchoService:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 legacyBatchService:
   ribbon:
-    listOfServers: ${myServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
