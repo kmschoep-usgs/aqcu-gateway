@@ -9,3 +9,19 @@ ribbonConnectTimeout: 1000
 ribbonReadTimeout: 10000
 
 hystrixThreadTimeout: 10000000
+
+#The following would override the base serviceId to the time series summary report. It would not affect
+#any other routing:
+#
+#zuul:
+#  routes:
+#    legacyTimeseriessummaryReport:
+#      path: /aqcu-webservice/service/reports/timeseriessummary/**
+#      serviceId: aqcu-tss-report/timeseriessummary
+#      stripPrefix: true
+#
+#aqcu-tss-report/timeseriessummary:
+#  ribbon:
+#    listOfServers: ${myServerList}
+#    IsSecure: ${legacyIsSecure:true}
+#    ReadTimeout: 100000
