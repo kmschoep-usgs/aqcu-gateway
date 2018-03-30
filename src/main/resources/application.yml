@@ -103,9 +103,9 @@ zuul:
     legacyTimeseriessummaryReport:
       path: /aqcu-webservice/service/reports/timeseriessummary/**
       #Legacy
-      #serviceId: timeseriessummaryReport
+      serviceId: timeseriessummaryReport
       #Restructured
-      serviceId: aqcu-tss-report/timeseriessummary
+      #serviceId: aqcu-tss-report/timeseriessummary
       stripPrefix: false
     legacyUvhydrographReport:
       path: /aqcu-webservice/service/reports/uvhydrograph/**
@@ -210,7 +210,7 @@ derivationchainReport:
 
 dvhydrographReport:
   ribbon:
-    listOfServers: ${dvhydroReportServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
@@ -259,16 +259,16 @@ sitevisitpeakReport:
 #Legacy
 timeseriessummaryReport:
   ribbon:
-    listOfServers: ${tssReportServerList}
+    listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
 #Restructured
-aqcu-tss-report/timeseriessummary:
-  ribbon:
-    listOfServers: ${myServerList}
-    IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
+#aqcu-tss-report/timeseriessummary:
+#  ribbon:
+#    listOfServers: ${myServerList}
+#    IsSecure: ${legacyIsSecure:true}
+#    ReadTimeout: 100000
 
 uvhydrographReport:
   ribbon:
