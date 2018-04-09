@@ -3,6 +3,7 @@ package gov.usgs.aqcu;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.SERVICE_ID_KEY;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.FORWARD_TO_KEY;
+import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.REQUEST_URI_KEY;
 
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.stereotype.Component;
@@ -16,14 +17,14 @@ public class CustomZuulFilter extends ZuulFilter {
 	@Override
 	public boolean shouldFilter() {
 		RequestContext ctx = RequestContext.getCurrentContext();
-		return !ctx.containsKey(FORWARD_TO_KEY)
+		return !(ctx.containsKey(FORWARD_TO_KEY) && !ctx.get(FORWARD_TO_KEY).toString().isEmpty())
 				&& ctx.getOrDefault(SERVICE_ID_KEY, "").toString().matches("^aqcu-.*/.*$");
 	}
 
 	@Override
 	public Object run() {
 		RequestContext ctx = RequestContext.getCurrentContext();
-		ctx.set("requestURI", ctx.get(SERVICE_ID_KEY));
+		ctx.set(REQUEST_URI_KEY, ctx.get(SERVICE_ID_KEY));
 		return null;
 	}
 

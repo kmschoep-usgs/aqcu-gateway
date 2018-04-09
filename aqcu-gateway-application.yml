@@ -2,7 +2,7 @@ keystoreLocation: /path/to/.keystore
 keystorePassword: changeit
 keystoreSSLKey: tomcat
 
-legacyServerList: http://localhost:8443
+legacyServerList: https://localhost:8443/aqcu-webservice
 dvhydroReportServerList: http://localhost:8444
 tssReportServerList: http://localhost:8444
 
