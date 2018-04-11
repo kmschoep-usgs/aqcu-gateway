@@ -119,17 +119,17 @@ zuul:
 
     legacyHealth:
       path: /service/health/**
-      serviceId: aqcu-webservice/service/health
+      serviceId: aqcu-webservice/service/health/**
       stripPrefix: false
 
     legacyEcho:
       path: /service/echo/**
-      serviceId: aqcu-webservice/service/echo
+      serviceId: aqcu-webservice/service/echo/**
       stripPrefix: false
 
     legacyBatch:
       path: /service/batch/**
-      serviceId: aqcu-webservice/service/batch
+      serviceId: aqcu-webservice/service/batch/**
       stripPrefix: false
 
 
@@ -277,19 +277,19 @@ aqcu-webservice/service/reports/xformExample:
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
-aqcu-webservice/service/health:
+aqcu-webservice/service/health/**:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
-aqcu-webservice/service/echo:
+aqcu-webservice/service/echo/**:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
-aqcu-webservice/service/batch:
+aqcu-webservice/service/batch/**:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
