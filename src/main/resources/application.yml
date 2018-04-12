@@ -12,125 +12,125 @@ zuul:
   ribbonIsolationStrategy: SEMAPHORE
   routes:
     legacyComputationsLookup:
-      path: /service/lookup/computations
+      path: /service/lookup/computations/**
       serviceId: aqcu-webservice/service/lookup/computations
-      stripPrefix: false
+      stripPrefix: true
     legacyControlConditionsLookup:
-      path: /service/lookup/controlConditions
+      path: /service/lookup/controlConditions/**
       serviceId: aqcu-webservice/service/lookup/controlConditions
-      stripPrefix: false
+      stripPrefix: true
     legacyDerivationChainFindLookup:
-      path: /service/lookup/derivationChain/find
+      path: /service/lookup/derivationChain/find/**
       serviceId: aqcu-webservice/service/lookup/derivationChain/find
-      stripPrefix: false
+      stripPrefix: true
     legacyDerivationChainRatingModelLookup:
-      path: /service/lookup/derivationChain/ratingModel
+      path: /service/lookup/derivationChain/ratingModel/**
       serviceId: aqcu-webservice/service/lookup/derivationChain/ratingModel
-      stripPrefix: false
+      stripPrefix: true
     legacyFieldVisitDatesLookup:
-      path: /service/lookup/field-visit-dates
+      path: /service/lookup/field-visit-dates/**
       serviceId: aqcu-webservice/service/lookup/field-visit-dates
-      stripPrefix: false
+      stripPrefix: true
     legacyPeriodsLookup:
-      path: /service/lookup/periods
+      path: /service/lookup/periods/**
       serviceId: aqcu-webservice/service/lookup/periods
-      stripPrefix: false
+      stripPrefix: true
     legacyReportTypesLookup:
-      path: /service/lookup/report/types
+      path: /service/lookup/report/types/**
       serviceId: aqcu-webservice/service/lookup/report/types
-      stripPrefix: false
+      stripPrefix: true
     legacySitefileLookup:
-      path: /service/lookup/sitefile
+      path: /service/lookup/sitefile/**
       serviceId: aqcu-webservice/service/lookup/sitefile
-      stripPrefix: false
+      stripPrefix: true
     legacySitesLookup:
-      path: /service/lookup/sites
+      path: /service/lookup/sites/**
       serviceId: aqcu-webservice/service/lookup/sites
-      stripPrefix: false
+      stripPrefix: true
     legacyTimeseriesProcessorTypesLookup:
-      path: /service/lookup/timeseries/processorTypes
+      path: /service/lookup/timeseries/processorTypes/**
       serviceId: aqcu-webservice/service/lookup/timeseries/processorTypes
-      stripPrefix: false
+      stripPrefix: true
     legacyTimeseriesIdentifiersLookup:
-      path: /service/lookup/timeseries/identifiers
+      path: /service/lookup/timeseries/identifiers/**
       serviceId: aqcu-webservice/service/lookup/timeseries/identifiers
-      stripPrefix: false
+      stripPrefix: true
     legacyUnitsLookup:
-      path: /service/lookup/units
+      path: /service/lookup/units/**
       serviceId: aqcu-webservice/service/lookup/units
-      stripPrefix: false
+      stripPrefix: true
 
     legacyCorrectionsataglanceReport:
       path: /service/reports/correctionsataglance/**
       serviceId: aqcu-webservice/service/reports/correctionsataglance
-      stripPrefix: false
+      stripPrefix: true
     legacyDerivationchainReport:
       path: /service/reports/derivationchain/**
       serviceId: aqcu-webservice/service/reports/derivationchain
-      stripPrefix: false
+      stripPrefix: true
     legacyDvhydrographReport:
       path: /service/reports/dvhydrograph/**
       serviceId: aqcu-webservice/service/reports/dvhydrograph
-      stripPrefix: false
+      stripPrefix: true
     legacyExampleReport:
       path: /service/reports/example/**
       serviceId: aqcu-webservice/service/reports/example
-      stripPrefix: false
+      stripPrefix: true
     legacyExtremesReport:
       path: /service/reports/extremes/**
       serviceId: aqcu-webservice/service/reports/extremes
-      stripPrefix: false
+      stripPrefix: true
     legacyFiveyeargwsumReport:
       path: /service/reports/fiveyeargwsum/**
       serviceId: aqcu-webservice/service/reports/fiveyeargwsum
-      stripPrefix: false
+      stripPrefix: true
     legacyFlattenXformExampleReport:
       path: /service/reports/flattenXformExample/**
       serviceId: aqcu-webservice/service/reports/flattenXformExample
-      stripPrefix: false
+      stripPrefix: true
     legacyRatingReport:
-      path: /service/reports/rating
+      path: /service/reports/rating/**
       serviceId: aqcu-webservice/service/reports/rating
-      stripPrefix: false
+      stripPrefix: true
     legacySensorreadingsummaryReport:
       path: /service/reports/sensorreadingsummary/**
       serviceId: aqcu-webservice/service/reports/sensorreadingsummary
-      stripPrefix: false
+      stripPrefix: true
     legacySitevisitpeakReport:
       path: /service/reports/sitevisitpeak/**
       serviceId: aqcu-webservice/service/reports/sitevisitpeak
-      stripPrefix: false
+      stripPrefix: true
     legacyTimeseriessummaryReport:
       path: /service/reports/timeseriessummary/**
       serviceId: aqcu-webservice/service/reports/timeseriessummary
-      stripPrefix: false
+      stripPrefix: true
     legacyUvhydrographReport:
       path: /service/reports/uvhydrograph/**
       serviceId: aqcu-webservice/service/reports/uvhydrograph
-      stripPrefix: false
+      stripPrefix: true
     legacyVdiagramReport:
       path: /service/reports/vdiagram/**
       serviceId: aqcu-webservice/service/reports/vdiagram
-      stripPrefix: false
+      stripPrefix: true
     legacyXformExampleReport:
       path: /service/reports/xformExample/**
       serviceId: aqcu-webservice/service/reports/xformExample
-      stripPrefix: false
+      stripPrefix: true
 
     legacyHealth:
       path: /service/health/**
       serviceId: aqcu-webservice/service/health
-      stripPrefix: false
+      stripPrefix: true
 
     legacyEcho:
       path: /service/echo/**
       serviceId: aqcu-webservice/service/echo
-      stripPrefix: false
+      stripPrefix: true
 
     legacyBatch:
       path: /service/batch/**
       serviceId: aqcu-webservice/service/batch
-      stripPrefix: false
+      stripPrefix: true
 
 
 aqcu-webservice/service/lookup/computations:

@@ -24,7 +24,7 @@ public class CustomZuulFilter extends ZuulFilter {
 	@Override
 	public Object run() {
 		RequestContext ctx = RequestContext.getCurrentContext();
-		ctx.set(REQUEST_URI_KEY, ctx.get(SERVICE_ID_KEY));
+		ctx.set(REQUEST_URI_KEY, ctx.get(SERVICE_ID_KEY).toString() + ctx.get(REQUEST_URI_KEY).toString());
 		return null;
 	}
 
