@@ -24,19 +24,7 @@ public class CustomZuulFilter extends ZuulFilter {
 	@Override
 	public Object run() {
 		RequestContext ctx = RequestContext.getCurrentContext();
-		String routedUri;
-
-		//For endpoints with sub-paths pull out the proper sub-path
-		if(ctx.get(SERVICE_ID_KEY).toString().endsWith("/**")) {
-			int lastSlash = ctx.get(SERVICE_ID_KEY).toString().lastIndexOf('/');
-			int secondToLastSlash = ctx.get(SERVICE_ID_KEY).toString().substring(0,lastSlash).lastIndexOf('/');
-			String matchPath = ctx.get(SERVICE_ID_KEY).toString().substring(secondToLastSlash,lastSlash);
-			String subPath = ctx.get(REQUEST_URI_KEY).toString().substring(ctx.get(REQUEST_URI_KEY).toString().indexOf(matchPath) + matchPath.length());
-			routedUri = ctx.get(SERVICE_ID_KEY).toString().substring(0,lastSlash) + subPath;
-		} else {
-			routedUri = ctx.get(SERVICE_ID_KEY).toString(); 
-		}
-		ctx.set(REQUEST_URI_KEY, routedUri);
+		ctx.set(REQUEST_URI_KEY, ctx.get(SERVICE_ID_KEY).toString() + ctx.get(REQUEST_URI_KEY).toString());
 		return null;
 	}
 
