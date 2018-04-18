@@ -303,13 +303,13 @@ aqcu/aqcu-webservice/service/batch:
 aqcu/dvhydrograph:
   ribbon:
     listOfServers: ${dvhydroReportServerList}
-    IsSecure: ${legacyIsSecure:true}
+    IsSecure: ${dvhydroReportIsSecure:true}
     ReadTimeout: 100000
 
 aqcu/timeseriessummary:
   ribbon:
     listOfServers: ${tssReportServerList}
-    IsSecure: ${legacyIsSecure:true}
+    IsSecure: ${tssReportIsSecure:true}
     ReadTimeout: 100000
 
 
