@@ -208,7 +208,7 @@ aqcu-webservice/service/reports/derivationchain:
 
 aqcu-webservice/service/reports/dvhydrograph:
   ribbon:
-    listOfServers: ${legacyServerList}
+    listOfServers: ${dvhydroReportServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
@@ -256,7 +256,7 @@ aqcu-webservice/service/reports/sitevisitpeak:
 
 aqcu-webservice/service/reports/timeseriessummary:
   ribbon:
-    listOfServers: ${legacyServerList}
+    listOfServers: ${tssReportServerList}
     IsSecure: ${legacyIsSecure:true}
     ReadTimeout: 100000
 
