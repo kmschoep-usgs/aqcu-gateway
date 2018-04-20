@@ -300,7 +300,7 @@ aqcu/aqcu-webservice/service/batch:
 
 # New Services
 
-aqcu/dvhydrograph:
+aqcu/dvhydro:
   ribbon:
     listOfServers: ${dvhydroReportServerList}
     IsSecure: ${dvhydroReportIsSecure:true}
