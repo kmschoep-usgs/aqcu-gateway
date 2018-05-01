@@ -200,103 +200,86 @@ aqcu/aqcu-webservice/service/reports/correctionsataglance:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/reports/derivationchain:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/reports/dvhydrograph:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/reports/example:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/reports/extremes:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/reports/fiveyeargwsum:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/reports/flattenXformExample:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/reports/rating:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/reports/sensorreadingsummary:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/reports/sitevisitpeak:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/reports/timeseriessummary:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/reports/uvhydrograph:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 10000000
 
 aqcu/aqcu-webservice/service/reports/vdiagram:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/reports/xformExample:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/health:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/echo:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/aqcu-webservice/service/batch:
   ribbon:
     listOfServers: ${legacyServerList}
     IsSecure: ${legacyIsSecure:true}
-    ReadTimeout: 100000
 
 # New Services
 
@@ -304,14 +287,11 @@ aqcu/dvhydro:
   ribbon:
     listOfServers: ${dvhydroReportServerList}
     IsSecure: ${dvhydroReportIsSecure:true}
-    ReadTimeout: 100000
 
 aqcu/timeseriessummary:
   ribbon:
     listOfServers: ${tssReportServerList}
     IsSecure: ${tssReportIsSecure:true}
-    ReadTimeout: 100000
-
 
 eureka:
   client:
