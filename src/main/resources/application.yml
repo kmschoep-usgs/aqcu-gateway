@@ -293,6 +293,11 @@ aqcu/timeseriessummary:
     listOfServers: ${tssReportServerList}
     IsSecure: ${tssReportIsSecure:true}
 
+aqcu/lookup:
+  ribbon:
+    listOfServers: ${lookupServiceServerList}
+    IsSecure: ${lookupServiceIsSecure:true}
+
 eureka:
   client:
     enabled: false
