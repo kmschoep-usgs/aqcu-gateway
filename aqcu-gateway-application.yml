@@ -2,9 +2,11 @@ keystoreLocation: /path/to/.keystore
 keystorePassword: changeit
 keystoreSSLKey: tomcat
 
+#Note that these are just example values that would not work if used directly
 legacyServerList: http://localhost:8443
 dvhydroReportServerList: http://localhost:8444
 tssReportServerList: http://localhost:8444
+lookupServiceServerList: http://localhost:8444
 
 ribbonMaxAutoRetries: 3
 ribbonConnectTimeout: 1000
