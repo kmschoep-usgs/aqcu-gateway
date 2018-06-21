@@ -360,7 +360,7 @@ ribbon:
 
 aqcu:
   login:
-    url: "https://localhost:8443/aqcu-ui"
+    url: ${aqcuLoginUrl:https://localhost:443/}
 
 hystrix:
   shareSecurityContext: true
