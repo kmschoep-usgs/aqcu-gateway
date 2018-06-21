@@ -358,6 +358,10 @@ ribbon:
   ReadTimeout: ${ribbonReadTimeout}
   OkToRetryOnAllOperations: true
 
+aqcu:
+  login:
+    url: ${aqcuLoginUrl:https://localhost:443/}
+
 hystrix:
   shareSecurityContext: true
   command:
