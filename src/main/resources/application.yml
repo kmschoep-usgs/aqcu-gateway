@@ -372,6 +372,16 @@ security:
   require-ssl: true
   basic:
     enabled: false
+  oauth2:
+    client:
+      clientId: ${oauthClientId}
+      clientSecret: ${oauthClientSecret}
+      accessTokenUri: ${oauthClientAccessTokenUri}
+      userAuthorizationUri: ${oauthClientAuthorizationUri}
+    resource:
+      id: ${oauthResourceId}
+      jwt:
+        keyUri: ${oauthResourceTokenKeyUri}
 
 management:
   security:
