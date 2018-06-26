@@ -10,6 +10,7 @@ server:
 
 zuul:
   retryable: true
+  sensitiveHeaders: 
   ribbonIsolationStrategy: SEMAPHORE
   routes:
     computationsLookup:
