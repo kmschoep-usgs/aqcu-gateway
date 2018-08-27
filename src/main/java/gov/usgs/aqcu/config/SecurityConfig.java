@@ -18,7 +18,6 @@ import org.springframework.security.oauth2.provider.authentication.OAuth2Authent
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
-
 import feign.RequestInterceptor;
 
 @Configuration
@@ -36,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.httpBasic().disable()
+			.csrf().disable()
 			.authorizeRequests()
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				.antMatchers("/swagger-resources/**", "/webjars/**", "/v2/**").permitAll()
@@ -45,8 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.logout().permitAll()
 			.and()
-				.csrf().disable()
-			.cors().and()
 			.addFilterAfter(oAuth2AuthenticationProcessingFilter(), AbstractPreAuthenticatedProcessingFilter.class)
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 		;
@@ -74,5 +72,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		return oauthAuthenticationManager;
 	}
-
 }
