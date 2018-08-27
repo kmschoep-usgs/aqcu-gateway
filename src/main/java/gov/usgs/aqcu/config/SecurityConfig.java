@@ -21,7 +21,6 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
 import feign.RequestInterceptor;
 
 @Configuration
@@ -38,8 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.httpBasic().disable()
-				.csrf().disable().cors()
+			.httpBasic()
+				.disable().csrf()
 			.and()
 			.authorizeRequests()
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
@@ -76,24 +75,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		oauthAuthenticationManager.setClientDetailsService(null);
 
 		return oauthAuthenticationManager;
-	}
-
-	//Zuul CORS Filter
-	@Bean
-	public CorsFilter corsFilter() {
-		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		final CorsConfiguration config = new CorsConfiguration();
-		config.setAllowCredentials(true);
-		config.addAllowedOrigin("*");
-		config.addAllowedHeader("*");
-		config.addAllowedMethod("OPTIONS");
-		config.addAllowedMethod("HEAD");
-		config.addAllowedMethod("GET");
-		config.addAllowedMethod("PUT");
-		config.addAllowedMethod("POST");
-		config.addAllowedMethod("DELETE");
-		config.addAllowedMethod("PATCH");
-		source.registerCorsConfiguration("/**", config);
-		return new CorsFilter(source);
 	}
 }
