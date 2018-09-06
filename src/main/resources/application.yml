@@ -284,6 +284,16 @@ aqcu/aqcu-webservice/service/batch:
 
 # New Services
 
+aqcu/correctionsataglance:
+  ribbon:
+    listOfServers: ${corrReportServerList}
+    IsSecure: ${corrReportIsSecure:true}
+
+aqcu/derivationchain:
+  ribbon:
+    listOfServers: ${dcReportServerList}
+    IsSecure: ${dcReportIsSecure:true}
+
 aqcu/dvhydro:
   ribbon:
     listOfServers: ${dvhydroReportServerList}
