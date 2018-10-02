@@ -287,7 +287,7 @@ aqcu/aqcu-webservice/service/batch:
 aqcu/fiveyeargwsum:
   ribbon:
     listOfServers: ${fiveYearReportServerList}
-    IsSecure: ${fiveYearIsSecure:true}
+    IsSecure: ${fiveYearReportIsSecure:true}
     
 aqcu/correctionsataglance:
   ribbon:
