@@ -284,6 +284,11 @@ aqcu/aqcu-webservice/service/batch:
 
 # New Services
 
+aqcu/sensorreadingsummary:
+  ribbon:
+    listOfServers: ${srsReportServerList}
+    IsSecure: ${srsReportIsSecure:true}
+
 aqcu/fiveyeargwsum:
   ribbon:
     listOfServers: ${fiveYearReportServerList}
