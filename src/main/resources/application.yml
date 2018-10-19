@@ -309,6 +309,11 @@ aqcu/dvhydro:
     listOfServers: ${dvhydroReportServerList}
     IsSecure: ${dvhydroReportIsSecure:true}
 
+aqcu/extremes:
+  ribbon:
+    listOfServers: ${extReportServerList}
+    IsSecure: ${extReportIsSecure:true}
+    
 aqcu/timeseriessummary:
   ribbon:
     listOfServers: ${tssReportServerList}
