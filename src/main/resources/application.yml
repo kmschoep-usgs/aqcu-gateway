@@ -283,17 +283,6 @@ aqcu/aqcu-webservice/service/batch:
     IsSecure: ${legacyIsSecure:true}
 
 # New Services
-
-aqcu/sensorreadingsummary:
-  ribbon:
-    listOfServers: ${srsReportServerList}
-    IsSecure: ${srsReportIsSecure:true}
-
-aqcu/fiveyeargwsum:
-  ribbon:
-    listOfServers: ${fiveYearReportServerList}
-    IsSecure: ${fiveYearReportIsSecure:true}
-    
 aqcu/correctionsataglance:
   ribbon:
     listOfServers: ${corrReportServerList}
@@ -313,11 +302,36 @@ aqcu/extremes:
   ribbon:
     listOfServers: ${extReportServerList}
     IsSecure: ${extReportIsSecure:true}
+
+aqcu/fiveyeargwsum:
+  ribbon:
+    listOfServers: ${fiveYearReportServerList}
+    IsSecure: ${fiveYearReportIsSecure:true}
+
+aqcu/sensorreadingsummary:
+  ribbon:
+    listOfServers: ${srsReportServerList}
+    IsSecure: ${srsReportIsSecure:true}
+
+aqcu/sitevisitpeak:
+  ribbon:
+    listOfServers: ${svpReportServerList}
+    IsSecure: ${svpReportIsSecure:true}
     
 aqcu/timeseriessummary:
   ribbon:
     listOfServers: ${tssReportServerList}
     IsSecure: ${tssReportIsSecure:true}
+
+aqcu/uvhydrograph:
+  ribbon:
+    listOfServers: ${uvhydroReportServerList}
+    IsSecure: ${uvhydroReportIsSecure:true}
+
+aqcu/vdiagram:
+  ribbon:
+    listOfServers: ${vdiReportServerList}
+    IsSecure: ${vdiReportIsSecure:true}
 
 aqcu/lookup/computations:
   ribbon:
