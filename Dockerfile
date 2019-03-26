@@ -18,7 +18,7 @@ RUN ${BUILD_COMMAND}
 FROM usgswma/wma-spring-boot-base:8-jre-slim-0.0.4
 
 ENV artifact_version=0.0.8-SNAPSHOT
-ENV serverPort=8443
+
 ENV ribbonMaxAutoRetries=0
 ENV ribbonConnectTimeout=6000
 ENV ribbonReadTimeout=60000
@@ -29,7 +29,6 @@ ENV oauthClientAuthorizationUri=https://example.gov/oauth/authorize
 ENV oauthResourceTokenKeyUri=https://example.gov/oauth/token_key
 ENV oauthResourceId=resource-id
 ENV aqcuLoginUrl=https://localhost:8443/
-ENV HEALTHY_RESPONSE_CONTAINS='{"status":"UP"}'
 
 COPY --chown=1000:1000 --from=build /build/target/*.jar app.jar
 
