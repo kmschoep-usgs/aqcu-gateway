@@ -3,7 +3,7 @@ Aquarius Customization - Gateway
 
 This service sits between the outside world and the back end services of AQCU. It is build upon the Spring Cloud/Netflix platform.
 
-It is built as a war to be deployed into a Tomcat container.
+It is built as a Docker Container
 
 Configured functionality includes:
 
@@ -17,11 +17,12 @@ The filter CustomZuulFilter is designed so that the application can transition f
 
 ## Running the Application
 
-The war built using maven can be deployed the same as any other to a Tomcat instance. Some additional configurations are needed before starting Tomcat:
+This application can be run locally using the docker container built during the build process or by directly building and running the application JAR. The included `docker-compose` file has 3 profiles to choose from when running the application locally:
 
-- At this time, it only works when deployed with all the other aqcu modules. To wire it into them, modify the context.xml's "aqcu.reports.webservice" value to "https://localhost:8443/aqcu-gateway/aqcu-webservice"
-- Add ```<Parameter name="spring.config.location" value="${catalina.base}/conf/application.yml" />``` to the context.xml file
-- Copy the base directory's application.yml to the conf folder (may need to append contents into existing file) and adjust any values as required.
-- Note that multiple apps in the same tomcat instance will share the same application.yml configuration.
+1. aqcu-gateway: This is the default profile which runs the application as it would be in our cloud environment. This is not recommended for local development as it makes configuring connections to other services running locally on your machine more difficult.
+2. aqcu-gateway-local-dev: This is the profile which runs the application as it would be in the aqcu-local-dev project, and is configured to make it easy to replace the aqcu-gateway instance in the local-dev project with this instance. It is run the same as the `aqcu-gateway` profile, except it uses the docker host network driver.
+3. aqcu-gateway-debug: This is the profile whichi runs the application exactly the same as `aqcu-gateway-local-dev` but also enables remote debugging for the application and opens up port 8000 into the container for that purpose.
 
-Once Tomcat is started, AQCU should function similar to before. Swagger and the Hystrix Dashboard should give you interesting info on the functioning of the gateway.
+Before any of these options are able to be run you must also generate certificates for this application to serve using the `create_certificates` script in the `docker/certificates` directory. Additionally, this service must be able to connect to a running instance of Water Auth when starting, and it is recommended that you use the Water Auth instance from the `aqcu-local-dev` project to accomplish this. In order for this application to communicate with any downstream services that it must call, including Water Auth, you must also place the certificates that are being served by those services into the `docker/certificates/import_certs` directory to be imported into the Java TrustStore of the running container.
+
+To build and run the application after completing the above steps you can run: `docker-compose up --build {profile}`, replacing `{profile}` with one of the options listed above.
