@@ -9,10 +9,10 @@
 
   jobs:
     include:
-      - name: jacoco
+      - name: java_build
         language: java
         script:
-          - mvn clean verify jacoco:report coveralls:report
+          - mvn clean verify
       - name: docker_build
         language: bash
         services: docker
