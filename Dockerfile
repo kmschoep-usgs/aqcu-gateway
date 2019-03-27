@@ -17,8 +17,6 @@ RUN ${BUILD_COMMAND}
 
 FROM usgswma/wma-spring-boot-base:8-jre-slim-0.0.4
 
-ENV artifact_version=0.0.8-SNAPSHOT
-
 ENV ribbonMaxAutoRetries=0
 ENV ribbonConnectTimeout=6000
 ENV ribbonReadTimeout=60000
