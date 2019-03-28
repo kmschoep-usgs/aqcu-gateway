@@ -5,3 +5,10 @@
 /.vscode
 /application.properties
 /application.yml
+**/metadata/*.xml
+**/*.jks
+**/*.p12
+**/*.crt
+**/*.csr
+**/*.chain
+**/*.key
