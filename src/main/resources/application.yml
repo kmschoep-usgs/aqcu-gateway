@@ -232,7 +232,6 @@ lambda:
   endpoint: "localhost:3001"
   functions:
     gwvisitreviewstatus: "VRStatReportFunction"
-    gwtestingtest: "gw-testing-test"
 
 eureka:
   client:
