@@ -69,12 +69,14 @@ public class LambdaReportController {
 			try {
 				String result = lambdaReportService.execute(functions.get(report), lambdaRequestJson);
 				return new ResponseEntity<String>(result, new HttpHeaders(), HttpStatus.OK);
-			} catch (LambdaExecutionException e) {
-				LOG.warn("Lambda function '" + functions.get(report) + "' errored during its execution. Error details can be found in the logs of the function.");
-				LOG.debug("Error: " + e.getMessage());
-				return new ResponseEntity<String>(GENERIC_ERROR_MESSAGE, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 			} catch (Exception e) {
-				LOG.error("Lambda function '" + functions.get(report) + "' failed to execute. Error: ", e);
+				if(e instanceof LambdaExecutionException) {
+					LOG.info("Lambda function '%s' errored during its execution. " +
+						"Error details can be found in the logs of the function.", functions.get(report));
+				} else {
+					LOG.error("Lambda function '%s' failed to execute. Error: %s", functions.get(report), e);
+				}
+				
 				return new ResponseEntity<String>(GENERIC_ERROR_MESSAGE, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}

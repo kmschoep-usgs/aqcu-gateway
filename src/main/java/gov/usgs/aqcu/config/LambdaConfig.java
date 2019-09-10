@@ -2,6 +2,7 @@ package gov.usgs.aqcu.config;
 
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.services.lambda.AWSLambdaClientBuilder;
+import com.amazonaws.util.StringUtils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,12 +20,12 @@ public class LambdaConfig {
     public AWSLambdaClientBuilder awsLambdaClientBuilder() {
         AWSLambdaClientBuilder lambdaClientBuilder = AWSLambdaClientBuilder.standard();
 
-        if(endpoint != null && !endpoint.isEmpty()) {
+        lambdaClientBuilder.setRegion(region);
+        
+        if(!StringUtils.isNullOrEmpty(endpoint)) {
             lambdaClientBuilder.setEndpointConfiguration(
                 new EndpointConfiguration(endpoint, region)
             );
-        } else {
-            lambdaClientBuilder.setRegion(region);
         }
 
         return lambdaClientBuilder;

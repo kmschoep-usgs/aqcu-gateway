@@ -14,8 +14,7 @@ public class AuthController {
     @GetMapping("token")
     public String getToken() {
         if(SecurityContextHolder.getContext().getAuthentication() != null){
-            String jwtToken = ((OAuth2AuthenticationDetails) ((OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication()).getDetails()).getTokenValue();
-            return jwtToken;
+            return ((OAuth2AuthenticationDetails) ((OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication()).getDetails()).getTokenValue();
         }
 
         return null;
