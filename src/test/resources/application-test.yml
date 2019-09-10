@@ -1,0 +1,8 @@
+lambda:
+  region: "us-west-2"
+  endpoint: "localhost:3001"
+  functions:
+    test: "test-function"
+aqcu:
+  login:
+    url: localhost:8080

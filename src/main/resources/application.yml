@@ -1,5 +1,5 @@
 server:
-  port: ${serverPort:443}
+  port: ${serverPort:8443}
   contextPath: ${serverContextPath:/}
   use-forward-headers: true
   ssl:
@@ -14,260 +14,103 @@ zuul:
   sensitiveHeaders: 
   ribbonIsolationStrategy: SEMAPHORE
   routes:
+    # Lookups
     computationsLookup:
       path: /service/lookup/computations/**
-      serviceId: aqcu/aqcu-webservice/service/lookup/computations
+      serviceId: aqcu/lookup/computations
       stripPrefix: true
     controlConditionsLookup:
       path: /service/lookup/controlConditions/**
-      serviceId: aqcu/aqcu-webservice/service/lookup/controlConditions
+      serviceId: aqcu/lookup/controlConditions
       stripPrefix: true
     derivationChainFindLookup:
       path: /service/lookup/derivationChain/find/**
-      serviceId: aqcu/aqcu-webservice/service/lookup/derivationChain/find
+      serviceId: aqcu/lookup/derivationChain/find
       stripPrefix: true
     derivationChainRatingModelLookup:
       path: /service/lookup/derivationChain/ratingModel/**
-      serviceId: aqcu/aqcu-webservice/service/lookup/derivationChain/ratingModel
+      serviceId: aqcu/lookup/derivationChain/ratingModel
       stripPrefix: true
     fieldVisitDatesLookup:
       path: /service/lookup/field-visit-dates/**
-      serviceId: aqcu/aqcu-webservice/service/lookup/field-visit-dates
+      serviceId: aqcu/lookup/field-visit-dates
       stripPrefix: true
     periodsLookup:
       path: /service/lookup/periods/**
-      serviceId: aqcu/aqcu-webservice/service/lookup/periods
-      stripPrefix: true
-    reportTypesLookup:
-      path: /service/lookup/report/types/**
-      serviceId: aqcu/aqcu-webservice/service/lookup/report/types
-      stripPrefix: true
-    sitefileLookup:
-      path: /service/lookup/sitefile/**
-      serviceId: aqcu/aqcu-webservice/service/lookup/sitefile
+      serviceId: aqcu/lookup/periods
       stripPrefix: true
     sitesLookup:
       path: /service/lookup/sites/**
-      serviceId: aqcu/aqcu-webservice/service/lookup/sites
+      serviceId: aqcu/lookup/sites
       stripPrefix: true
     timeseriesProcessorTypesLookup:
       path: /service/lookup/timeseries/processorTypes/**
-      serviceId: aqcu/aqcu-webservice/service/lookup/timeseries/processorTypes
+      serviceId: aqcu/lookup/timeseries/processorTypes
       stripPrefix: true
     timeseriesIdentifiersLookup:
       path: /service/lookup/timeseries/identifiers/**
-      serviceId: aqcu/aqcu-webservice/service/lookup/timeseries/identifiers
+      serviceId: aqcu/lookup/timeseries/identifiers
       stripPrefix: true
     unitsLookup:
       path: /service/lookup/units/**
-      serviceId: aqcu/aqcu-webservice/service/lookup/units
+      serviceId: aqcu/lookup/units
       stripPrefix: true
-
+    # Reports
     correctionsataglanceReport:
       path: /service/reports/correctionsataglance/**
-      serviceId: aqcu/aqcu-webservice/service/reports/correctionsataglance
+      serviceId: aqcu/correctionsataglance
       stripPrefix: true
     derivationchainReport:
       path: /service/reports/derivationchain/**
-      serviceId: aqcu/aqcu-webservice/service/reports/derivationchain
+      serviceId: aqcu/derivationchain
       stripPrefix: true
     dvhydrographReport:
       path: /service/reports/dvhydrograph/**
-      serviceId: aqcu/aqcu-webservice/service/reports/dvhydrograph
-      stripPrefix: true
-    exampleReport:
-      path: /service/reports/example/**
-      serviceId: aqcu/aqcu-webservice/service/reports/example
+      serviceId: aqcu/dvhydro
       stripPrefix: true
     extremesReport:
       path: /service/reports/extremes/**
-      serviceId: aqcu/aqcu-webservice/service/reports/extremes
+      serviceId: aqcu/extremes
       stripPrefix: true
     fiveyeargwsumReport:
       path: /service/reports/fiveyeargwsum/**
-      serviceId: aqcu/aqcu-webservice/service/reports/fiveyeargwsum
-      stripPrefix: true
-    flattenXformExampleReport:
-      path: /service/reports/flattenXformExample/**
-      serviceId: aqcu/aqcu-webservice/service/reports/flattenXformExample
-      stripPrefix: true
-    ratingReport:
-      path: /service/reports/rating/**
-      serviceId: aqcu/aqcu-webservice/service/reports/rating
+      serviceId: aqcu/fiveyeargwsum
       stripPrefix: true
     sensorreadingsummaryReport:
       path: /service/reports/sensorreadingsummary/**
-      serviceId: aqcu/aqcu-webservice/service/reports/sensorreadingsummary
+      serviceId: aqcu/sensorreadingsummary
       stripPrefix: true
     sitevisitpeakReport:
       path: /service/reports/sitevisitpeak/**
-      serviceId: aqcu/aqcu-webservice/service/reports/sitevisitpeak
+      serviceId: aqcu/sitevisitpeak
       stripPrefix: true
     timeseriessummaryReport:
       path: /service/reports/timeseriessummary/**
-      serviceId: aqcu/aqcu-webservice/service/reports/timeseriessummary
+      serviceId: aqcu/timeseriessummary
       stripPrefix: true
     uvhydrographReport:
       path: /service/reports/uvhydrograph/**
-      serviceId: aqcu/aqcu-webservice/service/reports/uvhydrograph
+      serviceId: aqcu/uvhydrograph
       stripPrefix: true
     vdiagramReport:
       path: /service/reports/vdiagram/**
-      serviceId: aqcu/aqcu-webservice/service/reports/vdiagram
+      serviceId: aqcu/vdiagram
       stripPrefix: true
-    xformExampleReport:
-      path: /service/reports/xformExample/**
-      serviceId: aqcu/aqcu-webservice/service/reports/xformExample
-      stripPrefix: true
-
+    # Other
     health:
       path: /service/health/**
       serviceId: aqcu/aqcu-webservice/service/health
       stripPrefix: true
-
     echo:
       path: /service/echo/**
       serviceId: aqcu/aqcu-webservice/service/echo
       stripPrefix: true
-
     batch:
       path: /service/batch/**
       serviceId: aqcu/aqcu-webservice/service/batch
       stripPrefix: true
 
-
 #Legacy Services
-
-aqcu/aqcu-webservice/service/lookup/computations:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/lookup/controlConditions:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/lookup/derivationChain/find:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/lookup/derivationChain/ratingModel:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/lookup/field-visit-dates:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/lookup/periods:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/lookup/report/types:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/lookup/sitefile:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/lookup/sites:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/lookup/timeseries/processorTypes:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/lookup/timeseries/identifiers:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/lookup/units:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/reports/correctionsataglance:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/reports/derivationchain:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/reports/dvhydrograph:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/reports/example:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/reports/extremes:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/reports/fiveyeargwsum:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/reports/flattenXformExample:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/reports/rating:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/reports/sensorreadingsummary:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/reports/sitevisitpeak:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/reports/timeseriessummary:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/reports/uvhydrograph:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/reports/vdiagram:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
-aqcu/aqcu-webservice/service/reports/xformExample:
-  ribbon:
-    listOfServers: ${legacyServerList}
-    IsSecure: ${legacyIsSecure:true}
-
 aqcu/aqcu-webservice/service/health:
   ribbon:
     listOfServers: ${legacyServerList}
@@ -383,6 +226,12 @@ aqcu/lookup/units:
   ribbon:
     listOfServers: ${lookupServiceServerList}
     IsSecure: ${lookupServiceIsSecure:true}
+
+lambda:
+  region: "us-west-2"
+  endpoint: "localhost:3001"
+  functions:
+    gwvisitreviewstatus: "VRStatReportFunction"
 
 eureka:
   client:
