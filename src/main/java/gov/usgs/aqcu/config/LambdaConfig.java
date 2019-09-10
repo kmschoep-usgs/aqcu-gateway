@@ -20,12 +20,12 @@ public class LambdaConfig {
     public AWSLambdaClientBuilder awsLambdaClientBuilder() {
         AWSLambdaClientBuilder lambdaClientBuilder = AWSLambdaClientBuilder.standard();
 
-        lambdaClientBuilder.setRegion(region);
-        
         if(!StringUtils.isNullOrEmpty(endpoint)) {
             lambdaClientBuilder.setEndpointConfiguration(
                 new EndpointConfiguration(endpoint, region)
             );
+        } else {
+            lambdaClientBuilder.setRegion(region);
         }
 
         return lambdaClientBuilder;

@@ -6,6 +6,9 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.REQUEST_URI_KEY;
 
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Component;
 
 import com.netflix.zuul.ZuulFilter;
@@ -26,7 +29,16 @@ public class CustomZuulFilter extends ZuulFilter {
 	@Override
 	public Object run() {
 		RequestContext ctx = RequestContext.getCurrentContext();
+
+		if(SecurityContextHolder.getContext().getAuthentication() != null) {
+			ctx.addZuulRequestHeader(
+				"Authorization", 
+				"Bearer " + ((OAuth2AuthenticationDetails) ((OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication()).getDetails()).getTokenValue()
+			);
+		}
+		
 		ctx.set(REQUEST_URI_KEY, ctx.get(SERVICE_ID_KEY).toString().substring(AQCU_SERVICE_ID_PREFIX.length()) + ctx.get(REQUEST_URI_KEY).toString());
+			
 		return null;
 	}
 

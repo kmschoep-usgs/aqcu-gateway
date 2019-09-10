@@ -229,17 +229,12 @@ aqcu/lookup/units:
 
 lambda:
   region: "us-west-2"
-  endpoint: "localhost:3001"
   functions:
     gwvisitreviewstatus: "VRStatReportFunction"
 
 eureka:
   client:
     enabled: false
-
-feign:
-  hystrix:
-    enabled: true
 
 ribbon:
   MaxAutoRetries: ${ribbonMaxAutoRetries}
@@ -251,16 +246,6 @@ ribbon:
 aqcu:
   login:
     url: ${aqcuLoginUrl:https://localhost:443/}
-
-hystrix:
-  shareSecurityContext: true
-  command:
-    default:
-      execution:
-        isolation:
-          strategy: SEMAPHORE
-          thread:
-            timeoutInMilliseconds: ${hystrixThreadTimeout}
 
 security:
   require-ssl: true
@@ -283,7 +268,7 @@ management:
 
 spring:
   profiles:
-    active: default, swagger
+    active: default
   application:
     name: aqcu-gateway
   jmx:
