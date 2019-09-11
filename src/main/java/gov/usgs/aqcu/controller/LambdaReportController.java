@@ -71,7 +71,7 @@ public class LambdaReportController {
 				return new ResponseEntity<String>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
 				if(e instanceof LambdaExecutionException) {
-					LOG.info("Lambda function '{}}' errored during its execution. " +
+					LOG.info("Lambda function '{}' errored during its execution. " +
 						"Error details can be found in the logs of the function.", functions.get(report));
 				} else {
 					LOG.error("Lambda function '{}' failed to execute. Error: {}", functions.get(report), e);
