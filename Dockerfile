@@ -20,7 +20,6 @@ FROM usgswma/wma-spring-boot-base:8-jre-slim-0.0.4
 ENV ribbonMaxAutoRetries=0
 ENV ribbonConnectTimeout=6000
 ENV ribbonReadTimeout=60000
-ENV hystrixThreadTimeout=10000000
 ENV oauthClientId=client-id
 ENV oauthClientAccessTokenUri=https://example.gov/oauth/token
 ENV oauthClientAuthorizationUri=https://example.gov/oauth/authorize

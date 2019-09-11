@@ -11,8 +11,6 @@ ribbonMaxAutoRetries: 3
 ribbonConnectTimeout: 1000
 ribbonReadTimeout: 10000
 
-hystrixThreadTimeout: 10000000
-
 #The following would override the base serviceId to the time series summary report. It would not affect
 #any other routing:
 #
