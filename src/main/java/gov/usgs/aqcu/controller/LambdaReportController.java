@@ -71,10 +71,10 @@ public class LambdaReportController {
 				return new ResponseEntity<String>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
 				if(e instanceof LambdaExecutionException) {
-					LOG.info("Lambda function '%s' errored during its execution. " +
+					LOG.info("Lambda function '{}' errored during its execution. " +
 						"Error details can be found in the logs of the function.", functions.get(report));
 				} else {
-					LOG.error("Lambda function '%s' failed to execute. Error: %s", functions.get(report), e);
+					LOG.error("Lambda function '{}' failed to execute. Error: {}", functions.get(report), e);
 				}
 				
 				return new ResponseEntity<String>(GENERIC_ERROR_MESSAGE, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
