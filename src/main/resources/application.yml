@@ -12,7 +12,8 @@ server:
 
 zuul:
   retryable: true
-  sensitiveHeaders: 
+  sensitiveHeaders: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
+  ignoredHeaders: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
   ribbonIsolationStrategy: SEMAPHORE
   routes:
     # Lookups
