@@ -16,45 +16,13 @@ zuul:
   ribbonIsolationStrategy: SEMAPHORE
   routes:
     # Lookups
-    computationsLookup:
-      path: /service/lookup/computations/**
-      serviceId: aqcu/lookup/computations
+    allLookups:
+      path: /service/lookup/**
+      serviceId: aqcu/lookup
       stripPrefix: true
-    controlConditionsLookup:
-      path: /service/lookup/controlConditions/**
-      serviceId: aqcu/lookup/controlConditions
-      stripPrefix: true
-    derivationChainFindLookup:
-      path: /service/lookup/derivationChain/find/**
-      serviceId: aqcu/lookup/derivationChain/find
-      stripPrefix: true
-    derivationChainRatingModelLookup:
-      path: /service/lookup/derivationChain/ratingModel/**
-      serviceId: aqcu/lookup/derivationChain/ratingModel
-      stripPrefix: true
-    fieldVisitDatesLookup:
-      path: /service/lookup/field-visit-dates/**
-      serviceId: aqcu/lookup/field-visit-dates
-      stripPrefix: true
-    periodsLookup:
-      path: /service/lookup/periods/**
-      serviceId: aqcu/lookup/periods
-      stripPrefix: true
-    sitesLookup:
-      path: /service/lookup/sites/**
-      serviceId: aqcu/lookup/sites
-      stripPrefix: true
-    timeseriesProcessorTypesLookup:
-      path: /service/lookup/timeseries/processorTypes/**
-      serviceId: aqcu/lookup/timeseries/processorTypes
-      stripPrefix: true
-    timeseriesIdentifiersLookup:
-      path: /service/lookup/timeseries/identifiers/**
-      serviceId: aqcu/lookup/timeseries/identifiers
-      stripPrefix: true
-    unitsLookup:
-      path: /service/lookup/units/**
-      serviceId: aqcu/lookup/units
+    allConifgs:
+      path: /service/config/**
+      serviceId: aqcu/config
       stripPrefix: true
     # Reports
     correctionsataglanceReport:
@@ -178,52 +146,12 @@ aqcu/vdiagram:
     listOfServers: ${vdiReportServerList}
     IsSecure: ${vdiReportIsSecure:true}
 
-aqcu/lookup/computations:
+aqcu/lookup:
   ribbon:
     listOfServers: ${lookupServiceServerList}
     IsSecure: ${lookupServiceIsSecure:true}
 
-aqcu/lookup/controlConditions:
-  ribbon:
-    listOfServers: ${lookupServiceServerList}
-    IsSecure: ${lookupServiceIsSecure:true}
-
-aqcu/lookup/derivationChain/find:
-  ribbon:
-    listOfServers: ${lookupServiceServerList}
-    IsSecure: ${lookupServiceIsSecure:true}
-
-aqcu/lookup/derivationChain/ratingModel:
-  ribbon:
-    listOfServers: ${lookupServiceServerList}
-    IsSecure: ${lookupServiceIsSecure:true}
-
-aqcu/lookup/field-visit-dates:
-  ribbon:
-    listOfServers: ${lookupServiceServerList}
-    IsSecure: ${lookupServiceIsSecure:true}
-
-aqcu/lookup/periods:
-  ribbon:
-    listOfServers: ${lookupServiceServerList}
-    IsSecure: ${lookupServiceIsSecure:true}
-
-aqcu/lookup/sites:
-  ribbon:
-    listOfServers: ${lookupServiceServerList}
-    IsSecure: ${lookupServiceIsSecure:true}
-
-aqcu/lookup/timeseries/processorTypes:
-  ribbon:
-    listOfServers: ${lookupServiceServerList}
-    IsSecure: ${lookupServiceIsSecure:true}
-
-aqcu/lookup/timeseries/identifiers:
-  ribbon:
-    listOfServers: ${lookupServiceServerList}
-    IsSecure: ${lookupServiceIsSecure:true}
-
-aqcu/lookup/units:
+aqcu/config:
   ribbon:
     listOfServers: ${lookupServiceServerList}
     IsSecure: ${lookupServiceIsSecure:true}
