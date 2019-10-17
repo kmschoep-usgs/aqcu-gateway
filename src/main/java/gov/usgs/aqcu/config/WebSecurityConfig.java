@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.authorizeRequests()
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-				.antMatchers("/info**", "/actuator/health/**", "/proxy.stream**", "/favicon.ico").permitAll()
+				.antMatchers("/info**", "/actuator/health/**", "/favicon.ico").permitAll()
 				.anyRequest().fullyAuthenticated()
 			.and()
 				.logout().permitAll()
