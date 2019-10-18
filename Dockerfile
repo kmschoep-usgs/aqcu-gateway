@@ -24,6 +24,8 @@ RUN if getent ahosts "sslhelp.doi.net" > /dev/null 2>&1; then \
 RUN mvn -B dependency:go-offline
 
 COPY src /build/src
+#include the .git dir for the sonar scanner
+COPY .git /build
 RUN ${BUILD_COMMAND}
 
 FROM usgswma/wma-spring-boot-base:8-jre-slim-0.0.4
