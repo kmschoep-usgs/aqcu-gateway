@@ -176,6 +176,9 @@ ribbon:
 aqcu:
   login:
     url: ${aqcuLoginUrl:https://localhost:443/}
+  ui:
+    login:
+      route: https://localhost:7000/login 
 
 security:
   require-ssl: true
