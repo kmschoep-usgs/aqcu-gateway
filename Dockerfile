@@ -1,5 +1,17 @@
 FROM maven:3.6.0-jdk-8-alpine AS build
 
+#Pass most build args into env vars
+ARG CI
+ENV CI=$CI
+
+ARG SONAR_HOST_URL
+ENV SONAR_HOST_URL=$SONAR_HOST_URL
+
+ARG SONAR_LOGIN
+ENV SONAR_LOGIN=$SONAR_LOGIN
+
+ARG BUILD_COMMAND="mvn -B clean verify"
+
 COPY pom.xml /build/pom.xml
 WORKDIR /build
 
@@ -12,7 +24,6 @@ RUN if getent ahosts "sslhelp.doi.net" > /dev/null 2>&1; then \
 RUN mvn -B dependency:go-offline
 
 COPY src /build/src
-ARG BUILD_COMMAND="mvn -B clean package"
 RUN ${BUILD_COMMAND}
 
 FROM usgswma/wma-spring-boot-base:8-jre-slim-0.0.4
