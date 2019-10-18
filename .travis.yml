@@ -11,6 +11,9 @@
     include:
       - name: java_build
         language: java
+        install:
+          # override the default with an intentional no-op
+          - true
         script:
           #exclude the dependency security check due to official NVD server's instability and lack of access to our internal NVD mirror
           - mvn clean verify -P \!dependency-security-check
