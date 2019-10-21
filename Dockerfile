@@ -10,7 +10,7 @@ ENV SONAR_HOST_URL=$SONAR_HOST_URL
 ARG SONAR_LOGIN
 ENV SONAR_LOGIN=$SONAR_LOGIN
 
-ARG BUILD_COMMAND="mvn -B clean verify"
+ARG BUILD_COMMAND="mvn -B clean package"
 
 COPY pom.xml /build/pom.xml
 WORKDIR /build
