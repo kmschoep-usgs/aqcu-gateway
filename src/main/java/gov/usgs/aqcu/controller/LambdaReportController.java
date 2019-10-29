@@ -57,9 +57,7 @@ public class LambdaReportController {
 		@RequestParam MultiValueMap<String, String> allRequestParams
 	) {
 		if (report != null && functions.containsKey(report.toLowerCase())) {
-			
 			String lambdaRequestJson;
-
 			try {
 				lambdaRequestJson = queryParamsToLambdaJson(allRequestParams);				
 			} catch (Exception e) {
