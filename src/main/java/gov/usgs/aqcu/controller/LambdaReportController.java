@@ -29,9 +29,8 @@ import gov.usgs.aqcu.service.LambdaReportService;
 @ConfigurationProperties(prefix = "lambda")
 public class LambdaReportController {
 	protected static final Logger LOG = LoggerFactory.getLogger(LambdaReportController.class);
-
 	private final String GENERIC_ERROR_MESSAGE = "An error occurred while executing the report function.";
-	
+
 	/*
 	 * This is populated automatically from "lambda.region" in the application.yml
 	 * because of the @ConfigurationProperties annotation on the class.
@@ -39,16 +38,18 @@ public class LambdaReportController {
 	private String region;
 
 	/*
-	 * This is populated automatically from "lambda.functions" in the application.yml
-	 * because of the @ConfigurationProperties annotation on the class.
+	 * This is populated automatically from "lambda.functions" in the
+	 * application.yml because of the @ConfigurationProperties annotation on the
+	 * class.
 	 */
 	private HashMap<String, String> functions;
-
 	private LambdaReportService lambdaReportService;
+	private ObjectMapper mapper;
 
 	@Autowired
 	public LambdaReportController(LambdaReportService lambdaReportService) {
 		this.lambdaReportService = lambdaReportService;
+		this.mapper = new ObjectMapper();
 	}
 
 	@GetMapping(path = "/{report}", produces = "application/json")
@@ -59,7 +60,7 @@ public class LambdaReportController {
 		if (report != null && functions.containsKey(report.toLowerCase())) {
 			String lambdaRequestJson;
 			try {
-				lambdaRequestJson = queryParamsToLambdaJson(allRequestParams);				
+				lambdaRequestJson = queryParamsToLambdaJson(allRequestParams);
 			} catch (Exception e) {
 				LOG.error("Failed to convert lambda report request parameters to JSON.\nParams: "
 					+ allRequestParams.toString() + "\nError: ", e);
@@ -101,8 +102,15 @@ public class LambdaReportController {
 		this.functions = functions;
 	}
 
+	public ObjectMapper getMapper() {
+		return mapper;
+	}
+
+	public void setMapper(ObjectMapper mapper) {
+		this.mapper = mapper;
+	}
+
 	protected String queryParamsToLambdaJson(Map<String, List<String>> queryParams) throws IOException {
-		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> lambdaRequestParams = new HashMap<>();
 
 		if(queryParams != null && !queryParams.isEmpty()) {

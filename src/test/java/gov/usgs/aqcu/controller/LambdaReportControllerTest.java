@@ -4,12 +4,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -42,6 +49,12 @@ public class LambdaReportControllerTest {
     @Autowired
     private LambdaReportController lambdaReportController;
 
+    @Before
+    public void setup() {
+        lambdaReportController.setMapper(new ObjectMapper());
+    }
+    
+
     @Test
     public void getReportLambdaSuccessTest() {
         given(lambdaReportService.execute(eq("test-function"), any(String.class))).willReturn("test");
@@ -56,14 +69,15 @@ public class LambdaReportControllerTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
-    public void getReportLambdaErrorTest1() {
-        /* This spy causes an error to be thrown when `isEmpty()` is called on the map. This causes the
-         * jackson MapSerializer to encounter an error, which gets propagated back up the chain as a
-         * JSON processing exception.
-         */
-        LinkedMultiValueMap<String,String> args = Mockito.spy(LinkedMultiValueMap.class);
-        Mockito.when(args.isEmpty()).thenThrow(new RuntimeException());
+    public void getReportLambdaErrorTest1() throws JsonProcessingException {
+        ObjectMapper mapper = Mockito.spy(ObjectMapper.class);
+
+        when(mapper.writeValueAsString(any(HashMap.class))).thenThrow(new RuntimeException("error"));
+
+        LinkedMultiValueMap<String,String> args = new LinkedMultiValueMap<>();
+        args.put("test1", Arrays.asList("test"));
+
+        lambdaReportController.setMapper(mapper);
 
         ResponseEntity<String> result = lambdaReportController.getReportLambda("test", args);
 
@@ -80,7 +94,7 @@ public class LambdaReportControllerTest {
     }
 
     @Test
-    public void getReportLambdaErrorTest3() {
+    public void getReportLambdaExecutionErrorTest() {
         given(lambdaReportService.execute(eq("test-function"), any(String.class))).willThrow(
             new LambdaExecutionException("failed")
         );
@@ -95,7 +109,7 @@ public class LambdaReportControllerTest {
     }
 
     @Test
-    public void getReportLambdaErrorTest4() {
+    public void getReportLambdaInvocationErrorTest() {
         given(lambdaReportService.execute(eq("test-function"), any(String.class))).willThrow(
             new LambdaInvocationException("failed")
         );
@@ -110,7 +124,7 @@ public class LambdaReportControllerTest {
     }
 
     @Test
-    public void getReportLambdaErrorTest5() {
+    public void getReportLambdaRuntimeErrorTest() {
         given(lambdaReportService.execute(eq("test-function"), any(String.class))).willThrow(
             new RuntimeException("failed")
         );
@@ -125,44 +139,58 @@ public class LambdaReportControllerTest {
     }
 
     @Test
-    public void queryParamsToLambdaJsonTest() throws Exception {
+    public void queryParamsToLambdaJsonStringParamTest() throws Exception {
         LinkedMultiValueMap<String,String> args = new LinkedMultiValueMap<>();
-        args.put("test1", Arrays.asList("test"));
+        args.add("test1", "testa");
 
         String result = lambdaReportController.queryParamsToLambdaJson(args);
-        assertEquals(result, "{\"test1\":\"test\"}");
+        assertEquals("{\"test1\":\"testa\"}", result);
+    }
 
+    @Test
+    public void queryParamsToLambdaJsonListParamTest() throws IOException {
+        LinkedMultiValueMap<String,String> args = new LinkedMultiValueMap<>();
         args.put("test1", Arrays.asList("testa", "testb"));
-        result = lambdaReportController.queryParamsToLambdaJson(args);
-        assertEquals(result, "{\"test1\":[\"testa\",\"testb\"]}");
 
-        args.put("test1", new ArrayList<>());
-        result = lambdaReportController.queryParamsToLambdaJson(args);
-        assertEquals(result, "{}");
+        String result = lambdaReportController.queryParamsToLambdaJson(args);
+        assertEquals("{\"test1\":[\"testa\",\"testb\"]}", result);
+    }
 
-        args.put("test1", null);
-        result = lambdaReportController.queryParamsToLambdaJson(args);
-        assertEquals(result, "{}");
-
-        args.remove("test1");
-        result = lambdaReportController.queryParamsToLambdaJson(args);
-        assertEquals(result, "{}");
-
-        result = lambdaReportController.queryParamsToLambdaJson(null);
-        assertEquals(result, "{}");
-
+    @Test
+    public void queryParamsToLambdaJsonMultiParamsTest() throws IOException {
+        LinkedMultiValueMap<String,String> args = new LinkedMultiValueMap<>();
         args.put("test1", Arrays.asList("testa", "testb"));
-        args.put("test2", Arrays.asList("testc"));
+        args.add("test2", "testc");
         args.put("test3", Arrays.asList("testd", "testf"));
         args.put("test4", new ArrayList<>());
-        args.put("test5", Arrays.asList("testg"));
+        args.add("test5", "testg");
         args.put("test6", null);
-        result = lambdaReportController.queryParamsToLambdaJson(args);
+
+        String result = lambdaReportController.queryParamsToLambdaJson(args);
         assertTrue(result.contains("\"test1\":[\"testa\",\"testb\"]"));
         assertTrue(result.contains("\"test2\":\"testc\""));
         assertTrue(result.contains("\"test3\":[\"testd\",\"testf\"]"));
         assertTrue(result.contains("\"test5\":\"testg\""));
         assertFalse(result.contains("test4"));
         assertFalse(result.contains("test6"));
+    }
+
+    @Test
+    public void queryParamsToLambdaJsonNullEmptyTest() throws IOException {
+        LinkedMultiValueMap<String,String> args = new LinkedMultiValueMap<>();
+        args.put("test1", new ArrayList<>());
+        String result = lambdaReportController.queryParamsToLambdaJson(args);
+        assertEquals("{}", result);
+
+        args.put("test1", null);
+        result = lambdaReportController.queryParamsToLambdaJson(args);
+        assertEquals("{}", result);
+
+        args.remove("test1", result);
+        result = lambdaReportController.queryParamsToLambdaJson(args);
+        assertEquals("{}", result);
+
+        result = lambdaReportController.queryParamsToLambdaJson(null);
+        assertEquals("{}", result);
     }
 }
