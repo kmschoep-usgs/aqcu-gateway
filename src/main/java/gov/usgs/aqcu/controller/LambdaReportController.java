@@ -1,6 +1,8 @@
 package gov.usgs.aqcu.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +14,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,14 +54,14 @@ public class LambdaReportController {
 	@GetMapping(path = "/{report}", produces = "application/json")
 	public ResponseEntity<String> getReportLambda(
 		@PathVariable("report") String report, 
-		@RequestParam Map<String, String> allRequestParams
+		@RequestParam MultiValueMap<String, String> allRequestParams
 	) {
 		if (report != null && functions.containsKey(report.toLowerCase())) {
-			ObjectMapper mapper = new ObjectMapper();
+			
 			String lambdaRequestJson;
 
 			try {
-				lambdaRequestJson = mapper.writeValueAsString(allRequestParams);
+				lambdaRequestJson = queryParamsToLambdaJson(allRequestParams);				
 			} catch (Exception e) {
 				LOG.error("Failed to convert lambda report request parameters to JSON.\nParams: "
 					+ allRequestParams.toString() + "\nError: ", e);
@@ -98,5 +101,24 @@ public class LambdaReportController {
 
 	public void setFunctions(HashMap<String, String> functions) {
 		this.functions = functions;
+	}
+
+	protected String queryParamsToLambdaJson(Map<String, List<String>> queryParams) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> lambdaRequestParams = new HashMap<>();
+
+		if(queryParams != null && !queryParams.isEmpty()) {
+			for(String queryKey : queryParams.keySet()) {
+				if(queryParams.get(queryKey) != null && !queryParams.get(queryKey).isEmpty()) {
+					if(queryParams.get(queryKey).size() > 1) {
+						lambdaRequestParams.put(queryKey, queryParams.get(queryKey));
+					} else {
+						lambdaRequestParams.put(queryKey, queryParams.get(queryKey).get(0));
+					}
+				}
+			}
+		}		
+
+		return mapper.writeValueAsString(lambdaRequestParams);
 	}
 }
