@@ -25,6 +25,7 @@ RUN mvn -B dependency:go-offline
 
 COPY src /build/src
 #include the .git dir for the sonar scanner
+COPY dependency-check-suppression.xml /build
 COPY .git /build
 RUN ${BUILD_COMMAND}
 
