@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,6 +33,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import gov.usgs.aqcu.exception.LambdaExecutionException;
 import gov.usgs.aqcu.exception.LambdaInvocationException;
+import gov.usgs.aqcu.lambda.LambdaFunctionConfig;
 import gov.usgs.aqcu.service.LambdaReportService;
 
 @RunWith(SpringRunner.class)
@@ -57,7 +57,7 @@ public class LambdaReportControllerTest {
 
     @Test
     public void getReportLambdaSuccessTest() {
-        given(lambdaReportService.execute(eq("test-function"), any(String.class))).willReturn("test");
+        given(lambdaReportService.execute(any(LambdaFunctionConfig.class), any(String.class))).willReturn("test");
         
         LinkedMultiValueMap<String,String> args = new LinkedMultiValueMap<>();
         args.put("test1", Arrays.asList("test"));
@@ -95,7 +95,7 @@ public class LambdaReportControllerTest {
 
     @Test
     public void getReportLambdaExecutionErrorTest() {
-        given(lambdaReportService.execute(eq("test-function"), any(String.class))).willThrow(
+        given(lambdaReportService.execute(any(LambdaFunctionConfig.class), any(String.class))).willThrow(
             new LambdaExecutionException("failed")
         );
         
@@ -110,7 +110,7 @@ public class LambdaReportControllerTest {
 
     @Test
     public void getReportLambdaInvocationErrorTest() {
-        given(lambdaReportService.execute(eq("test-function"), any(String.class))).willThrow(
+        given(lambdaReportService.execute(any(LambdaFunctionConfig.class), any(String.class))).willThrow(
             new LambdaInvocationException("failed")
         );
 
@@ -125,7 +125,7 @@ public class LambdaReportControllerTest {
 
     @Test
     public void getReportLambdaRuntimeErrorTest() {
-        given(lambdaReportService.execute(eq("test-function"), any(String.class))).willThrow(
+        given(lambdaReportService.execute(any(LambdaFunctionConfig.class), any(String.class))).willThrow(
             new RuntimeException("failed")
         );
 

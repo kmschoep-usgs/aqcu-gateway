@@ -1,5 +1,9 @@
 package gov.usgs.aqcu.service;
 
+import java.util.UUID;
+
+import com.amazonaws.ClientConfiguration;
+import com.amazonaws.PredefinedClientConfigurations;
 import com.amazonaws.services.lambda.AWSLambda;
 import com.amazonaws.services.lambda.AWSLambdaClientBuilder;
 import com.amazonaws.services.lambda.model.InvokeRequest;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import gov.usgs.aqcu.exception.LambdaExecutionException;
 import gov.usgs.aqcu.exception.LambdaInvocationException;
+import gov.usgs.aqcu.lambda.LambdaFunctionConfig;
 
 @Service
 public class LambdaReportService {
@@ -42,16 +47,30 @@ public class LambdaReportService {
      *    does not cause the SDK to throw an error, instead the details of the error will be included in
      *    the response body.
      * 
-     * @param functionName The fully qualified name of the Lambda function in AWS to execute
+     * @param LambdaFunctionConfig The populated LambdaFunctionConfig object (loaded from YAML) containing
+     * the function name and timeout in MS.
      * @param payload The String payload to send to the Lambda function. This should be stringified JSON
      * @return The respones body from the Lambda function. This should be stringified JSON
      */
-    public String execute(String functionName, String payload) {
+    public String execute(LambdaFunctionConfig function, String payload) {
+        String guidString = UUID.randomUUID().toString();
+        LOG.info("Lambda '" + function.getName() + "' initiated - " + guidString);
+        LOG.info("Timeout: " + function.getTimeout());
         InvokeResult result;
-        AWSLambda client = awsLambdaClientBuilder.build();
+        ClientConfiguration clientConfiguration = PredefinedClientConfigurations.defaultConfig()
+            .withMaxErrorRetry(0)
+            .withRequestTimeout(function.getTimeout() * 2)
+            .withSocketTimeout(function.getTimeout() * 2);
+        AWSLambda client = awsLambdaClientBuilder
+            .withClientConfiguration(clientConfiguration)
+            .build();
         InvokeRequest request = new InvokeRequest()
-            .withFunctionName(functionName)
-            .withPayload(payload);
+            .withFunctionName(function.getName())
+            .withPayload(payload)
+            // Disable single-request timeout in favor of client execution timeout in order to avoid retries
+            .withSdkRequestTimeout(function.getTimeout())
+            .withSdkClientExecutionTimeout(function.getTimeout());
+
 
         result = client.invoke(request);
 
@@ -66,7 +85,7 @@ public class LambdaReportService {
         }
 
         // The Lambda succeeded
-        LOG.debug("Lambda '" + functionName + "' succeeded.");
+        LOG.info("Lambda '" + function.getName() + "' succeeded - " + guidString);
         return resultString;
     }
 

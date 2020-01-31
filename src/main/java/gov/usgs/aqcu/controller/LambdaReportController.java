@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.usgs.aqcu.exception.LambdaExecutionException;
+import gov.usgs.aqcu.lambda.LambdaFunctionConfig;
 import gov.usgs.aqcu.service.LambdaReportService;
 
 @RestController
@@ -42,7 +43,7 @@ public class LambdaReportController {
 	 * application.yml because of the @ConfigurationProperties annotation on the
 	 * class.
 	 */
-	private HashMap<String, String> functions;
+	private HashMap<String, LambdaFunctionConfig> functions;
 	private LambdaReportService lambdaReportService;
 	private ObjectMapper mapper;
 
@@ -94,11 +95,11 @@ public class LambdaReportController {
 		this.region = region;
 	}
 
-	public HashMap<String, String> getFunctions() {
+	public HashMap<String, LambdaFunctionConfig>  getFunctions() {
 		return functions;
 	}
 
-	public void setFunctions(HashMap<String, String> functions) {
+	public void setFunctions(HashMap<String, LambdaFunctionConfig>  functions) {
 		this.functions = functions;
 	}
 
