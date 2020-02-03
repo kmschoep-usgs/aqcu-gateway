@@ -53,9 +53,6 @@ public class LambdaReportService {
      * @return The respones body from the Lambda function. This should be stringified JSON
      */
     public String execute(LambdaFunctionConfig function, String payload) {
-        String guidString = UUID.randomUUID().toString();
-        LOG.info("Lambda '" + function.getName() + "' initiated - " + guidString);
-        LOG.info("Timeout: " + function.getTimeout());
         InvokeResult result;
         ClientConfiguration clientConfiguration = PredefinedClientConfigurations.defaultConfig()
             .withMaxErrorRetry(0)
@@ -71,7 +68,9 @@ public class LambdaReportService {
             .withSdkRequestTimeout(function.getTimeout())
             .withSdkClientExecutionTimeout(function.getTimeout());
 
-
+        String guidString = UUID.randomUUID().toString();
+        LOG.debug("Lambda '" + function.getName() + "' initiated - " + guidString);
+        
         result = client.invoke(request);
 
         String resultString = getResponsePayloadString(result);
@@ -85,7 +84,7 @@ public class LambdaReportService {
         }
 
         // The Lambda succeeded
-        LOG.info("Lambda '" + function.getName() + "' succeeded - " + guidString);
+        LOG.debug("Lambda '" + function.getName() + "' succeeded - " + guidString);
         return resultString;
     }
 
