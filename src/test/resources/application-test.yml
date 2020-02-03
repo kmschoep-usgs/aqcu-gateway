@@ -2,7 +2,9 @@ lambda:
   region: "us-west-2"
   endpoint: "localhost:3001"
   functions:
-    test: "test-function"
+    test: 
+      name: "test-function"
+      timeout: 1
 aqcu:
   login:
     url: localhost:8080

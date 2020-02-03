@@ -9,6 +9,7 @@ import static org.mockito.ArgumentMatchers.any;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
+import com.amazonaws.ClientConfiguration;
 import com.amazonaws.services.lambda.AWSLambda;
 import com.amazonaws.services.lambda.AWSLambdaClientBuilder;
 import com.amazonaws.services.lambda.model.InvokeResult;
@@ -22,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import gov.usgs.aqcu.exception.LambdaExecutionException;
 import gov.usgs.aqcu.exception.LambdaInvocationException;
+import gov.usgs.aqcu.lambda.LambdaFunctionConfig;
 import gov.usgs.aqcu.service.LambdaReportService;
 
 @RunWith(SpringRunner.class)
@@ -38,6 +40,7 @@ public class LambdaReportServiceTest {
 
     @Before
     public void setup() {
+        when(builder.withClientConfiguration(any(ClientConfiguration.class))).thenReturn(builder);
         when(builder.build()).thenReturn(client);
 
         lambdaReportService = new LambdaReportService(builder);
@@ -79,7 +82,7 @@ public class LambdaReportServiceTest {
         
         when(client.invoke(any())).thenReturn(invokeResult);
 
-        String result = lambdaReportService.execute("test", "test");
+        String result = lambdaReportService.execute(new LambdaFunctionConfig("test-function", 1), "test");
 
         assertEquals(result, "test");
     }
@@ -94,7 +97,7 @@ public class LambdaReportServiceTest {
         when(client.invoke(any())).thenThrow(new RuntimeException("failure"));
 
         try {
-            lambdaReportService.execute("test", "test");
+            lambdaReportService.execute(new LambdaFunctionConfig("test-function", 1), "test");
             fail("Expected an exception to be thrown.");
         } catch(Exception e) {
             assertEquals(e.getMessage(), "failure");
@@ -111,7 +114,7 @@ public class LambdaReportServiceTest {
         when(client.invoke(any())).thenReturn(invokeResult);
 
         try {
-            lambdaReportService.execute("test", "test");
+            lambdaReportService.execute(new LambdaFunctionConfig("test-function", 1), "test");
             fail("Expected an exception of type LambdaExecutionException to be thrown. Got no exception.");
         } catch(LambdaExecutionException e) {
             assertEquals(e.getMessage(), "failure");
@@ -130,7 +133,7 @@ public class LambdaReportServiceTest {
         when(client.invoke(any())).thenReturn(invokeResult);
 
         try {
-            lambdaReportService.execute("test", "test");
+            lambdaReportService.execute(new LambdaFunctionConfig("test-function", 1), "test");
             fail("Expected an exception of type LambdaInvocationException to be thrown. Got no exception.");
         } catch(LambdaInvocationException e) {
             assertTrue(e.getMessage().contains("failure"));

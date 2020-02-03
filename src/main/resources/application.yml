@@ -160,8 +160,12 @@ aqcu/config:
 lambda:
   region: "us-west-2"
   functions:
-    gwvisitreviewstatus: "VRStatReportFunction"
-    gwvisitextremes: "VExtReportFunction"
+    gwvisitreviewstatus: 
+      name: "GWVRStatReportFunction"
+      timeout: 180000
+    gwvisitextremes: 
+      name: "GWVExtReportFunction"
+      timeout: 180000
 
 eureka:
   client:
