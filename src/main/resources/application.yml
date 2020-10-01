@@ -9,6 +9,7 @@ server:
     key-password: ${keystorePassword}
     key-alias: ${keystoreSSLKey:tomcat}
     enabled-protocols: TLSv1.2
+  max-http-header-size: 16KB
 
 zuul:
   retryable: true
