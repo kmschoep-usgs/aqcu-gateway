@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import com.amazonaws.http.timers.client.ClientExecutionTimeoutException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -91,6 +92,21 @@ public class LambdaReportControllerTest {
 
         assertEquals(404, result.getStatusCode().value());
         assertTrue(result.getBody().contains("not found"));
+    }
+    
+    @Test
+    public void getReportLambdaTimeoutErrorTest() {
+        given(lambdaReportService.execute(any(LambdaFunctionConfig.class), any(String.class))).willThrow(
+            new ClientExecutionTimeoutException("timeout")
+        );
+        
+        LinkedMultiValueMap<String,String> args = new LinkedMultiValueMap<>();
+        args.put("test1", Arrays.asList("test"));
+
+        ResponseEntity<String> result = lambdaReportController.getReportLambda("test", args);
+
+        assertEquals(500, result.getStatusCode().value());
+        assertTrue(result.getBody().contains("timeout"));
     }
 
     @Test

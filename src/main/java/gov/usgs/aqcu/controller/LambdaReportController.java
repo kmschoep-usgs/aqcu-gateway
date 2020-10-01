@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.amazonaws.http.timers.client.ClientExecutionTimeoutException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.slf4j.Logger;
@@ -58,6 +59,7 @@ public class LambdaReportController {
 		@PathVariable("report") String report, 
 		@RequestParam MultiValueMap<String, String> allRequestParams
 	) {
+		String detailErrorMessage = "";
 		if (report != null && functions.containsKey(report.toLowerCase())) {
 			String lambdaRequestJson;
 			try {
@@ -76,11 +78,15 @@ public class LambdaReportController {
 				if(e instanceof LambdaExecutionException) {
 					LOG.info("Lambda function '{}' errored during its execution. " +
 						"Error details can be found in the logs of the function.", functions.get(report));
+				// catch the report timeout exception to be able to return the message to the user
+				} else if (e instanceof ClientExecutionTimeoutException) {
+					detailErrorMessage = e.getLocalizedMessage();
+					LOG.error("Lambda function '{}' timed out. Error: {}", functions.get(report), e);
 				} else {
 					LOG.error("Lambda function '{}' failed to execute. Error: {}", functions.get(report), e);
 				}
 				
-				return new ResponseEntity<String>(GENERIC_ERROR_MESSAGE, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<String>(GENERIC_ERROR_MESSAGE + " " + detailErrorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
 

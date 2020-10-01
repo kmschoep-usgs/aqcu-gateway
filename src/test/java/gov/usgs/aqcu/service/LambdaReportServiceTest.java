@@ -24,7 +24,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import gov.usgs.aqcu.exception.LambdaExecutionException;
 import gov.usgs.aqcu.exception.LambdaInvocationException;
 import gov.usgs.aqcu.lambda.LambdaFunctionConfig;
-import gov.usgs.aqcu.service.LambdaReportService;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")

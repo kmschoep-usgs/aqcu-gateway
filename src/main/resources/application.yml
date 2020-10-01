@@ -162,10 +162,10 @@ lambda:
   functions:
     gwvisitreviewstatus: 
       name: "GWVRStatReportFunction"
-      timeout: 180000
+      timeout: ${gwvisitreviewstatusLambdaTimeout}
     gwvisitextremes: 
       name: "GWVExtReportFunction"
-      timeout: 180000
+      timeout: ${gwvisitextremesLambdaTimeout}
 
 eureka:
   client:

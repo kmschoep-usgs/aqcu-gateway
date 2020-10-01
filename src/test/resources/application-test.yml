@@ -5,6 +5,13 @@ lambda:
     test: 
       name: "test-function"
       timeout: 1
+    gwvisitreviewstatus: 
+      name: "GWVRStatReportFunction"
+      timeout: 1
+    gwvisitextremes: 
+      name: "GWVExtReportFunction"
+      timeout: 1
+
 aqcu:
   login:
     url: localhost:8080
