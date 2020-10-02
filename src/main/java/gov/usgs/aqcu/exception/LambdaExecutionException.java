@@ -9,7 +9,7 @@ package gov.usgs.aqcu.exception;
  * 
  * When this exception is encountered it means that the Gateway service did what it was
  * supposed to do correctly, but something happened in the downstream Lambda that caused
- * it to fail. This means we should not consider this exception as an error that occured
+ * it to fail. This means we should not consider this exception as an error that occurred
  * within the Gateway service itself.
  */
 public class LambdaExecutionException extends RuntimeException {

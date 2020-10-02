@@ -5,6 +5,7 @@ lambda:
     test: 
       name: "test-function"
       timeout: 1
+
 aqcu:
   login:
     url: localhost:8080
