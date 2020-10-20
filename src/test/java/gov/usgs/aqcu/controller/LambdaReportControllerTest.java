@@ -110,7 +110,7 @@ public class LambdaReportControllerTest {
     }
 
     @Test
-    public void getReportLambdaExecutionErrorTest() {
+    public void getReportLambdaExecutionErrorUnparsableErrorMessageTest() {
         given(lambdaReportService.execute(any(LambdaFunctionConfig.class), any(String.class))).willThrow(
             new LambdaExecutionException("failed")
         );
@@ -122,6 +122,23 @@ public class LambdaReportControllerTest {
 
         assertEquals(500, result.getStatusCode().value());
         assertTrue(result.getBody().contains("An error occurred"));
+        assertTrue(result.getBody().contains("Could not parse error response"));
+    }
+    
+    @Test
+    public void getReportLambdaExecutionErrorParsableErrorMessageTest() {
+        given(lambdaReportService.execute(any(LambdaFunctionConfig.class), any(String.class))).willThrow(
+            new LambdaExecutionException("{\"errorMessage\": \"This is an error from the report\"}")
+        );
+        
+        LinkedMultiValueMap<String,String> args = new LinkedMultiValueMap<>();
+        args.put("test1", Arrays.asList("test"));
+
+        ResponseEntity<String> result = lambdaReportController.getReportLambda("test", args);
+
+        assertEquals(500, result.getStatusCode().value());
+        assertTrue(result.getBody().contains("An error occurred"));
+        assertTrue(result.getBody().contains("This is an error from the report"));
     }
 
     @Test
