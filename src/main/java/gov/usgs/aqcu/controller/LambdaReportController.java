@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.amazonaws.http.timers.client.ClientExecutionTimeoutException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.slf4j.Logger;
@@ -82,6 +84,7 @@ public class LambdaReportController {
 				if(e instanceof LambdaExecutionException) {
 					LOG.info("Lambda function '{}' errored during its execution. " +
 						"Error details can be found in the logs of the function.", functions.get(report));
+					detailErrorMessage = parseDetailMessage(e.getMessage()).get("errorMessage").toString();
 				// catch the report timeout exception to be able to return the message to the user
 				} else if (e instanceof ClientExecutionTimeoutException) {
 					detailErrorMessage = e.getLocalizedMessage();
@@ -137,6 +140,17 @@ public class LambdaReportController {
 		}		
 
 		return mapper.writeValueAsString(lambdaRequestParams);
+	}
+	
+	protected Map<String, Object> parseDetailMessage(String message) {
+		TypeReference<Map<String, Object>> mapType = new TypeReference<Map<String, Object>>() {};
+		Map<String, Object> reportErrorMessage = new HashMap<>();
+		try {
+			reportErrorMessage = mapper.readValue(message, mapType);
+		} catch (JsonProcessingException e) {
+			reportErrorMessage.put("errorMessage", "Could not parse error response.");
+		} 
+		return reportErrorMessage;
 	}
 	
 	String getRequestingUser() {
