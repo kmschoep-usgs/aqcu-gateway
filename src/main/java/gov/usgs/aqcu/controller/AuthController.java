@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-//import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -38,23 +37,23 @@ public class AuthController {
 		if(SecurityContextHolder.getContext().getAuthentication() != null){
 			response.sendRedirect(uiLoginPage + "?accessToken=" + ((OAuth2AuthenticationDetails) ((OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication()).getDetails()).getTokenValue());
 		} else {
-            response.sendError(HttpStatus.FORBIDDEN.value(), "Login failed");
-        }
+			response.sendError(HttpStatus.FORBIDDEN.value(), "Login failed");
+		}
 	}
 
-    @GetMapping("token")
-    public String getToken() {
-        if(SecurityContextHolder.getContext().getAuthentication() != null){
-            return ((OAuth2AuthenticationDetails) ((OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication()).getDetails()).getTokenValue();
-        }
-        return null;
-    }
-    
-    @GetMapping(path = "userDetails", produces = "application/json")
-    public ResponseEntity<Map<String, Object>> getUserDetails() {
-    	Map<String, Object> userDetails = new HashMap<>();
-    	userDetails.put("username", authUtil.getRequestingUser());
-    	userDetails.put("userRoles", authUtil.getRoles());
-    	return new ResponseEntity<Map<String, Object>>(userDetails, new HttpHeaders(), HttpStatus.OK);
-    }
+	@GetMapping("token")
+	public String getToken() {
+		if(SecurityContextHolder.getContext().getAuthentication() != null){
+			return ((OAuth2AuthenticationDetails) ((OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication()).getDetails()).getTokenValue();
+		}
+		return null;
+	}
+
+	@GetMapping(path = "userDetails", produces = "application/json")
+	public ResponseEntity<Map<String, Object>> getUserDetails() {
+		Map<String, Object> userDetails = new HashMap<>();
+		userDetails.put("username", authUtil.getRequestingUser());
+		userDetails.put("userRoles", authUtil.getRoles());
+		return new ResponseEntity<Map<String, Object>>(userDetails, new HttpHeaders(), HttpStatus.OK);
+	}
 }
