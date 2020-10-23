@@ -36,6 +36,7 @@ import gov.usgs.aqcu.exception.LambdaExecutionException;
 import gov.usgs.aqcu.exception.LambdaInvocationException;
 import gov.usgs.aqcu.lambda.LambdaFunctionConfig;
 import gov.usgs.aqcu.service.LambdaReportService;
+import gov.usgs.aqcu.util.AuthUtil;
 
 @RunWith(SpringRunner.class)
 @Configuration
@@ -46,6 +47,9 @@ public class LambdaReportControllerTest {
 
     @MockBean
     private LambdaReportService lambdaReportService;
+    
+    @MockBean
+    private AuthUtil authUtil;
     
     @Autowired
     private LambdaReportController lambdaReportController;
@@ -59,6 +63,7 @@ public class LambdaReportControllerTest {
     @Test
     public void getReportLambdaSuccessTest() {
         given(lambdaReportService.execute(any(LambdaFunctionConfig.class), any(String.class))).willReturn("test");
+        given(authUtil.getRequestingUser()).willReturn("testUser");
         
         LinkedMultiValueMap<String,String> args = new LinkedMultiValueMap<>();
         args.put("test1", Arrays.asList("test"));
@@ -67,6 +72,7 @@ public class LambdaReportControllerTest {
 
         assertEquals(200, result.getStatusCode().value());
         assertTrue(result.getBody().contains("test"));
+        assertEquals("testUser", args.get("requestingUser").get(0));
     }
 
     @Test
