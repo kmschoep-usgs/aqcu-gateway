@@ -17,9 +17,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import gov.usgs.aqcu.exception.LambdaExecutionException;
 import gov.usgs.aqcu.lambda.LambdaFunctionConfig;
 import gov.usgs.aqcu.service.LambdaReportService;
+import gov.usgs.aqcu.util.AuthUtil;
 
 @RestController
 @RequestMapping("lambda/reports")
@@ -37,7 +35,7 @@ import gov.usgs.aqcu.service.LambdaReportService;
 public class LambdaReportController {
 	protected static final Logger LOG = LoggerFactory.getLogger(LambdaReportController.class);
 	private final String GENERIC_ERROR_MESSAGE = "An error occurred while executing the report function.";
-	public static final String UNKNOWN_USERNAME = "unknown";
+
 	/*
 	 * This is populated automatically from "lambda.region" in the application.yml
 	 * because of the @ConfigurationProperties annotation on the class.
@@ -51,11 +49,13 @@ public class LambdaReportController {
 	 */
 	private HashMap<String, LambdaFunctionConfig> functions;
 	private LambdaReportService lambdaReportService;
+	private AuthUtil authUtil;
 	private ObjectMapper mapper;
 
 	@Autowired
-	public LambdaReportController(LambdaReportService lambdaReportService) {
+	public LambdaReportController(LambdaReportService lambdaReportService, AuthUtil authUtil) {
 		this.lambdaReportService = lambdaReportService;
+		this.authUtil = authUtil;
 		this.mapper = new ObjectMapper();
 	}
 
@@ -66,7 +66,7 @@ public class LambdaReportController {
 	) {
 		String detailErrorMessage = "";
 		if (report != null && functions.containsKey(report.toLowerCase())) {
-			allRequestParams.add("requestingUser", getRequestingUser());
+			allRequestParams.add("requestingUser", authUtil.getRequestingUser());
 			String lambdaRequestJson;
 			try {
 				lambdaRequestJson = queryParamsToLambdaJson(allRequestParams);
@@ -151,14 +151,5 @@ public class LambdaReportController {
 			reportErrorMessage.put("errorMessage", "Could not parse error response.");
 		} 
 		return reportErrorMessage;
-	}
-	
-	String getRequestingUser() {
-		String username = UNKNOWN_USERNAME;
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (null != authentication && !(authentication instanceof AnonymousAuthenticationToken)) {
-			username= authentication.getName();
-		}
-		return username;
 	}
 }
