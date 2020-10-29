@@ -13,6 +13,10 @@ ENV SONAR_LOGIN=$SONAR_LOGIN
 ARG BUILD_COMMAND="mvn -B clean package"
 
 COPY pom.xml /build/pom.xml
+
+#copy the host's maven repository cache into the container
+COPY .m2/repository /root/.m2/repository
+
 WORKDIR /build
 
 RUN if getent ahosts "sslhelp.doi.net" > /dev/null 2>&1; then \
