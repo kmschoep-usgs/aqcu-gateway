@@ -18,16 +18,16 @@ public class CustomErrorZuulFilter extends ZuulFilter {
 
 	@Value("${aqcu.login.url}")
 	private String loginUrl;
-    private final PathMatcher matcher = new AntPathMatcher();
-        
+	private final PathMatcher matcher = new AntPathMatcher();
+
 	@Override
 	public boolean shouldFilter() {
 		RequestContext ctx = RequestContext.getCurrentContext();
-        int statusCode = ctx.getResponseStatusCode();
-        boolean isAuthError = statusCode == 401 || statusCode == 403;
-        String path = ctx.getRequest().getRequestURI();
-        boolean isConfigRoute = matcher.match("/service/config/*", path);
-        boolean shouldFilter = isAuthError && !isConfigRoute;
+		int statusCode = ctx.getResponseStatusCode();
+		boolean isAuthError = statusCode == 401 || statusCode == 403;
+		String path = ctx.getRequest().getRequestURI();
+		boolean isConfigRoute = matcher.match("/service/config/*", path);
+		boolean shouldFilter = isAuthError && !isConfigRoute;
 		return shouldFilter;
 	}
 
