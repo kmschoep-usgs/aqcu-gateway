@@ -6,17 +6,29 @@ import org.springframework.stereotype.Component;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import org.springframework.http.server.PathContainer;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
+import org.springframework.util.RouteMatcher.Route;
+import org.springframework.web.util.pattern.PathPatternParser;
+import org.springframework.web.util.pattern.PathPatternRouteMatcher;
 
 @Component
 public class CustomErrorZuulFilter extends ZuulFilter {
 
 	@Value("${aqcu.login.url}")
 	private String loginUrl;
+	private final PathMatcher matcher = new AntPathMatcher();
 
 	@Override
 	public boolean shouldFilter() {
 		RequestContext ctx = RequestContext.getCurrentContext();
-		return ctx.getResponseStatusCode() == 401 || ctx.getResponseStatusCode() == 403;
+		int statusCode = ctx.getResponseStatusCode();
+		boolean isAuthError = statusCode == 401 || statusCode == 403;
+		String path = ctx.getRequest().getRequestURI();
+		boolean isConfigRoute = matcher.match("/service/config/*", path);
+		boolean shouldFilter = isAuthError && !isConfigRoute;
+		return shouldFilter;
 	}
 
 	@Override
