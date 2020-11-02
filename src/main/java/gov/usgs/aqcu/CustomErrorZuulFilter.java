@@ -26,7 +26,9 @@ public class CustomErrorZuulFilter extends ZuulFilter {
 		int statusCode = ctx.getResponseStatusCode();
 		boolean isAuthError = statusCode == 401 || statusCode == 403;
 		String path = ctx.getRequest().getRequestURI();
-		boolean isConfigRoute = matcher.match("/service/config/*", path);
+		
+		//The route MUST end in a double star ("**"). A single star will fail to match deeper paths like "/service/config/me/folders/asdf"
+		boolean isConfigRoute = matcher.match("/service/config/**", path);
 		boolean shouldFilter = isAuthError && !isConfigRoute;
 		return shouldFilter;
 	}

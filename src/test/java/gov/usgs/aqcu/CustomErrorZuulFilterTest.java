@@ -87,11 +87,13 @@ public class CustomErrorZuulFilterTest {
     @Test
     public void shouldNotFilterUnauthorizedConfigResponses() {
         assertFalse(itShouldFilter("/service/config/foo", 401));
+        assertFalse(itShouldFilter("/service/config/groups/me/folders/asdf", 401));
     }
     
     @Test
     public void shouldNotFilterForbiddenConfigResponses() {
         assertFalse(itShouldFilter("/service/config/foo", 403));
+        assertFalse(itShouldFilter("/service/config/groups/me/folders/asdf", 403));
     }
 
 }
