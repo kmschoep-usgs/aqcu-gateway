@@ -99,7 +99,7 @@ public class LambdaReportServiceTest {
             lambdaReportService.execute(new LambdaFunctionConfig("test-function", 1), "test");
             fail("Expected an exception to be thrown.");
         } catch(Exception e) {
-            assertEquals(e.getMessage(), "failure");
+            assertEquals(e.getMessage(), "failure1");
         }
     }
 
